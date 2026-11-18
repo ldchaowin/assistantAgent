@@ -27,5 +27,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "22"
+      - name: Install test dependencies
+        run: cd dsh-plugin-phone && npm install --no-audit --no-fund
       - name: Plugin tests
         run: cd dsh-plugin-phone && node --test test/*.test.mjs

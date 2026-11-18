@@ -5,10 +5,21 @@ import vm from "node:vm";
 import { createRequire } from "node:module";
 
 const source = fs.readFileSync(new URL("../client/client.js", import.meta.url), "utf8");
-const requireProfile = createRequire(new URL("../package.json", import.meta.url));
+const requireLocal = createRequire(new URL("../package.json", import.meta.url));
 const profileModules = process.env.HOME + "/.dsh/profiles/node_modules/";
-const React = requireProfile(profileModules + "react");
-const { renderToStaticMarkup } = requireProfile(profileModules + "react-dom/server");
+
+/** React is a devDependency for tests, but DSH also ships one for the runtime. */
+function requireReact(id) {
+  try {
+    return requireLocal(id);
+  } catch (error) {
+    if (!error || error.code !== "MODULE_NOT_FOUND") throw error;
+    return requireLocal(profileModules + id);
+  }
+}
+
+const React = requireReact("react");
+const { renderToStaticMarkup } = requireReact("react-dom/server");
 
 function loadClient(reactModule, overrides = {}) {
   let definition;
