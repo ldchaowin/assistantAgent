@@ -1,0 +1,32 @@
+# Local environment / build caches
+.venv/
+.tools/
+.venv*/
+.pio/
+.pio-core/
+__pycache__/
+*.pyc
+.pytest_cache/
+node_modules/
+*.egg-info/
+build/
+dist/
+
+# Local runtime data (screenshots, logs, traces) — never publish
+runs/
+shots/
+logs/
+build.log
+*.log
+.DS_Store
+
+# Personal templates live here; only examples/ is tracked
+/templates/
+/templates/.versions/
+.env
+*.pem
+*.key
+secrets/
+
+# Generated scenario frames can be rebuilt with tools/make_scenario_assets.py
+scenarios/generated/

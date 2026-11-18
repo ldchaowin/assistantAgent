@@ -1,0 +1,12 @@
+{
+  "name": "game-daily-demo",
+  "description": "模拟游戏日常：开始挑战 → 继续 → 胜利 → BACK",
+  "frames": "frames/game",
+  "defaults": {"timeout": 3.0, "retries": 1, "interval": 0.1},
+  "steps": [
+    {"action": "tap_text", "text": "开始挑战"},
+    {"action": "tap_text", "text": "继续"},
+    {"action": "assert_text", "text": "胜利"},
+    {"action": "key", "code": "BACK"}
+  ]
+}

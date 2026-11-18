@@ -1,0 +1,9 @@
+{
+  "name": "real-wlan-demo",
+  "description": "真机：设置主界面 → WLAN → 更多 WLAN 设置",
+  "defaults": {"timeout": 5.0, "retries": 1, "interval": 0.2},
+  "steps": [
+    {"action": "tap_text", "text": "WLAN"},
+    {"action": "assert_text", "text": "网络加速"}
+  ]
+}

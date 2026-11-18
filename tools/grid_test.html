@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HID Grid Test</title>
+<style>
+  :root {
+    --ink: #17324D;
+    --muted: #5B6B7A;
+    --teal: #1F7A8C;
+    --line: #D5DEE5;
+    --bg: #F7FAFB;
+    --hit: #E6F2F5;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    display: flex;
+    flex-direction: column;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, "PingFang SC", "Noto Sans SC", sans-serif;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) 0 env(safe-area-inset-left);
+    overscroll-behavior: none;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 16px 10px;
+  }
+  h1 { margin: 0; font-size: 18px; letter-spacing: .02em; }
+  .meta { margin-top: 3px; font: 11px ui-monospace, Menlo, monospace; color: var(--muted); }
+  button {
+    border: 1px solid var(--line);
+    background: #fff;
+    color: var(--ink);
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+  }
+  button:active { background: var(--hit); }
+  main {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    gap: 4px;
+    margin: 0 12px;
+    touch-action: manipulation;
+  }
+  .cell {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: #fff;
+    font: 12px ui-monospace, Menlo, monospace;
+    color: #8A98A5;
+    transition: background .08s, border-color .08s;
+  }
+  .cell.hit {
+    background: var(--hit);
+    border-color: var(--teal);
+    color: var(--teal);
+  }
+  .cell .coord {
+    position: absolute;
+    right: 6px;
+    bottom: 4px;
+    font-size: 9px;
+    opacity: .65;
+  }
+  #dot {
+    position: fixed;
+    display: none;
+    width: 14px;
+    height: 14px;
+    margin: -7px 0 0 -7px;
+    border-radius: 50%;
+    background: var(--teal);
+    box-shadow: 0 0 0 4px rgba(31, 122, 140, .18);
+    pointer-events: none;
+  }
+  footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+    font-size: 12px;
+    color: var(--muted);
+  }
+  #last { font-family: ui-monospace, Menlo, monospace; }
+</style>
+</head>
+<body>
+<header>
+  <div>
+    <h1>HID Grid Test</h1>
+    <div class="meta" id="screen"></div>
+  </div>
+  <button id="reset">重置</button>
+</header>
+
+<main id="grid"></main>
+<div id="dot"></div>
+
+<footer>
+  <span id="last">等待点击</span>
+  <span>5 × 5 · 仅看相对落点</span>
+</footer>
+
+<script>
+  const COLS = 5;
+  const ROWS = 5;
+  const grid = document.getElementById('grid');
+  const dot = document.getElementById('dot');
+  const last = document.getElementById('last');
+  const screen = document.getElementById('screen');
+
+  for (let r = 0; r < ROWS; r += 1) {
+    for (let c = 0; c < COLS; c += 1) {
+      const cell = document.createElement('div');
+      cell.className = 'cell';
+      cell.dataset.r = String(r);
+      cell.dataset.c = String(c);
+      cell.innerHTML = `${r + 1}-${c + 1}<span class="coord">${r + 1}-${c + 1}</span>`;
+      grid.appendChild(cell);
+    }
+  }
+
+  function refreshScreen() {
+    screen.textContent = `${window.innerWidth}×${window.innerHeight} css px · dpr ${window.devicePixelRatio.toFixed(2)}`;
+  }
+
+  grid.addEventListener('pointerdown', (event) => {
+    const cell = event.target.closest('.cell');
+    if (!cell) return;
+    event.preventDefault();
+    cell.classList.add('hit');
+    window.setTimeout(() => cell.classList.remove('hit'), 320);
+
+    dot.style.display = 'block';
+    dot.style.left = `${event.clientX}px`;
+    dot.style.top = `${event.clientY}px`;
+    last.textContent = `x=${Math.round(event.clientX)} y=${Math.round(event.clientY)} · cell ${Number(cell.dataset.r) + 1}-${Number(cell.dataset.c) + 1}`;
+  });
+
+  document.getElementById('reset').addEventListener('click', () => {
+    dot.style.display = 'none';
+    last.textContent = '等待点击';
+    document.querySelectorAll('.cell.hit').forEach((el) => el.classList.remove('hit'));
+  });
+
+  window.addEventListener('resize', refreshScreen);
+  refreshScreen();
+</script>
+</body>
+</html>

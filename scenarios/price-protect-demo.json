@@ -1,0 +1,14 @@
+{
+  "name": "price-protect-demo",
+  "description": "模拟京东价保：桌面 → 京东 → 我的 → 客户服务 → 价格保护 → 一键申请",
+  "frames": "frames/price",
+  "defaults": {"timeout": 3.0, "retries": 1, "interval": 0.1},
+  "steps": [
+    {"action": "tap_text", "text": "京东"},
+    {"action": "tap_text", "text": "我的"},
+    {"action": "tap_text", "text": "客户服务"},
+    {"action": "tap_text", "text": "价格保护"},
+    {"action": "tap_text", "text": "一键申请"},
+    {"action": "assert_text", "text": "申请成功"}
+  ]
+}

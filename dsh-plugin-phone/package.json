@@ -1,0 +1,68 @@
+{
+  "name": "dsh-plugin-phone",
+  "version": "0.14.4",
+  "description": "DeepSeek Harness plugin for ESP32-S3 HID phone automation: screenshots, OCR text location, physical clicks/swipes, task panel, replayable templates and review.",
+  "type": "module",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./client/client.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "client",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "test": "node --test test/*.test.mjs"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": ">=4.0.1",
+    "@deepseek-ai/dsh-tools": ">=0.1.0-rc.6"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "inject": [
+        "@deepseek-ai/dsh-client-runtime",
+        "@deepseek-ai/dsh-client-ui-slots",
+        "@deepseek-ai/dsh-client-ui-sidebar",
+        "@deepseek-ai/dsh-client-ui-layout",
+        "@deepseek-ai/dsh-client-ui-workspace",
+        "@deepseek-ai/dsh-client-connection"
+      ],
+      "platform": "web"
+    }
+  },
+  "license": "MIT",
+  "author": "ldchaowin <ldchao@outlook.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ldchaowin/assistantAgent.git",
+    "directory": "dsh-plugin-phone"
+  },
+  "homepage": "https://github.com/ldchaowin/assistantAgent/tree/main/dsh-plugin-phone#readme",
+  "bugs": {
+    "url": "https://github.com/ldchaowin/assistantAgent/issues"
+  },
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "phone",
+    "android",
+    "esp32",
+    "hid",
+    "ocr",
+    "automation",
+    "scrcpy"
+  ]
+}

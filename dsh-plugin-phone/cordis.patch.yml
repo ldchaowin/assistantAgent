@@ -1,0 +1,36 @@
+# dsh-plugin-phone — DSH profile patch (copy into your profile's cordis.patch.yml).
+#
+# Edit the three paths below for your machine, then restart DSH Desktop.
+# Prefer token auth: export PHONE_SERVICE_TOKEN in the environment that starts
+# DSH, and keep the value below in sync (or run the service yourself and set
+# `autoStartService: false`).
+- insert:
+    - id: dsh-plugin-phone
+      name: dsh-plugin-phone
+      config:
+        baseUrl: http://127.0.0.1:8765
+        token: ""
+        # The service owns the HID hand over TCP; the plugin only talks HTTP.
+        autoStartService: true
+        serviceCwd: /path/to/assistantAgent
+        serviceCommand:
+          - sh
+          - /path/to/assistantAgent/scripts/serve_phone.sh
+        serviceLog: /path/to/assistantAgent/runs/phone-service.log
+        serviceHealthIntervalMs: 20000
+        # Restart the capture when frames go stale, with exponential backoff.
+        serviceRestartOnDegraded: true
+        serviceDegradedBackoffMs: 120000
+        serviceDegradedBackoffMaxMs: 900000
+        # Host-created agents (summaries, guided navigation) need a model route.
+        # Empty = read the profile's `agent-default-model` entry.
+        provider: ""
+        model: ""
+        # guided execution: let the model drive every step when the environment
+        # is unknown; set to false to prefer replaying the recorded approach.
+        guidedFirst: true
+        guidedApproach: true
+        guidedRun: true
+        learnApproach: true
+        templateRunTimeoutMs: 900000
+        environmentCheck: true

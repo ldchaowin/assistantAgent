@@ -1,0 +1,14 @@
+{
+  "name": "settings-demo",
+  "description": "设置 → 无线局域网 → BACK 返回 → 滑动",
+  "frames": "frames/settings",
+  "defaults": {"timeout": 3.0, "retries": 1, "interval": 0.1},
+  "steps": [
+    {"action": "tap_text", "text": "无线局域网"},
+    {"action": "assert_text", "text": "WLAN"},
+    {"action": "key", "code": "BACK"},
+    {"action": "assert_text", "text": "设置"},
+    {"action": "swipe", "x1": 540, "y1": 1800, "x2": 540, "y2": 600, "ms": 400},
+    {"action": "sleep", "ms": 100}
+  ]
+}

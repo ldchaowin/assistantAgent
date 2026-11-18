@@ -1,0 +1,39 @@
+# Third-party notices
+
+This repository is MIT-licensed (see `LICENSE`). The following components are
+included or linked and keep their own licenses:
+
+## Vendored: Espressif Network Provisioner client
+
+`console/phone_console/provisioning/vendor/esp_prov/` vendors code from
+[espressif/esp-idf](https://github.com/espressif/esp-idf) (esp_prov / protocomm)
+under the Apache License 2.0.
+
+- Upstream commit and file list: `console/phone_console/provisioning/vendor/VENDORED.md`
+- License text: `console/phone_console/provisioning/vendor/LICENSE-APACHE-2.0.txt`
+- SPDX headers are preserved in the vendored files.
+
+## Firmware dependencies (fetched by PlatformIO, not vendored)
+
+`firmware/esp32s3-hand` builds against:
+
+- **Arduino core for ESP32** — LGPL-2.1 (Arduino), Apache-2.0 (ESP-IDF)
+- **ESP-IDF / NimBLE / Network Provisioning** — Apache-2.0
+- **ArduinoJson** — MIT
+
+These are downloaded by PlatformIO into `.pio/` at build time and are not
+redistributed in this repository.
+
+## Python / Node dependencies
+
+Installed from PyPI / npm at install time and not vendored:
+
+- `pyserial`, `numpy`, `Pillow`, `opencv-python`, `rapidocr-onnxruntime`,
+  `av`, `bleak`, `protobuf`, `cryptography` (see `console/pyproject.toml`)
+- Node: only `@deepseek-ai/*` peer dependencies of the DSH plugin (provided by
+  the DSH installation).
+
+## Assets
+
+`scenarios/frames/` 和 `docs/assets/eye-demo.png` 是**合成图片**，由
+`tools/make_scenario_assets.py` 生成，不含真实设备或个人数据。
