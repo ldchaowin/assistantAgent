@@ -644,7 +644,9 @@ test("saveTemplate summarises the run into an intent plan", async () => {
     config: {
       runsDir: join(dir, "runs"),
       templatesDir: join(dir, "templates"),
-      summarizeTemplates: true
+      summarizeTemplates: true,
+      provider: "test-provider",
+      model: "test-model"
     }
   });
   const task = await runTaskWithEvents(service, events, "session-summary");
@@ -707,6 +709,8 @@ test("summary agents also run in the task workspace", async () => {
       runsDir: join(dir, "runs"),
       templatesDir: join(dir, "templates"),
       summarizeTemplates: true,
+      provider: "test-provider",
+      model: "test-model",
     },
   });
   const task = await runTaskWithEvents(service, events, "session-summary-cwd");
